@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-VERSION = "0.1.3"
+VERSION = "0.1.4"
 NAME = "aes"
 DESCRIPTION = "A simple encrypt/decrypt lib based on AES."
 INSTALL_REQUIRES = [
@@ -26,7 +26,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
         long_description = pypandoc.convert_text(md_description, to='rst', format='md')
     except(IOError, ImportError) as e:
         long_description = md_description
-print(f'long_description: {long_description}')
+
 setup(
     name=package_name,
     version=VERSION,
