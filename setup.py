@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-VERSION = "0.1.4"
+VERSION = "0.1.6"
 NAME = "aes"
 DESCRIPTION = "A simple encrypt/decrypt lib based on AES."
 INSTALL_REQUIRES = [
@@ -31,7 +31,7 @@ setup(
     name=package_name,
     version=VERSION,
     description=DESCRIPTION,
-    long_description=long_description,
+    long_description='',
     url=f'https://github.com/zhaolins/{package_name}',
     author='Zhaolin Su',
     author_email='z@suho.me',
