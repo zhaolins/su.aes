@@ -1,4 +1,5 @@
 from Crypto.Cipher import AES
+from Crypto.Util import Counter
 from binascii import hexlify, unhexlify
 import os
 
@@ -15,14 +16,14 @@ def _pad_bytes(byte_str, size):
     return byte_str.ljust(size)
 
 
-def encrypt(key, data, counter=None, output_binary=False):
+def encrypt(key, data, output_binary=False):
     byte_key = bytes(key, 'utf-8') if not isinstance(key, bytes) else key
     encrypt_key = _pad_bytes(byte_key, KS)
     byte_data = bytes(data, 'utf-8') if not isinstance(data, bytes) else data
-    counter = counter if isinstance(counter, bytes) else bytes(counter, 'utf-8') if counter else os.urandom(BS)
+    counter_prefix = os.urandom(BS)
 
-    cipher = AES.new(encrypt_key, MODE, counter=lambda: counter)
-    byte_result = counter + cipher.encrypt(byte_data)
+    cipher = AES.new(encrypt_key, MODE, counter=Counter.new(BS * 8))
+    byte_result = counter_prefix + cipher.encrypt(byte_data)
     if output_binary:
         return byte_result
     return hexlify(byte_result).decode()
@@ -34,10 +35,10 @@ def decrypt(key, data, is_hex_input=True, output_binary=False):
     input_byte_data = bytes(data, 'utf-8') if not isinstance(data, bytes) else data
     byte_data = unhexlify(input_byte_data) if is_hex_input else input_byte_data
 
-    counter = byte_data[:BS]
+    counter_prefix = byte_data[:BS]
     ciphertext = byte_data[BS:]
 
-    cipher = AES.new(encrypt_key, MODE, counter=lambda: counter)
+    cipher = AES.new(encrypt_key, MODE, counter=Counter.new(BS * 8))
     byte_result = cipher.decrypt(ciphertext)
     if output_binary:
         return byte_result

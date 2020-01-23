@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-VERSION = "0.1.6"
+VERSION = "0.1.7"
 NAME = "aes"
 DESCRIPTION = "A simple encrypt/decrypt lib based on AES."
 INSTALL_REQUIRES = [
-    'pycrypto'
+    'pycryptodome'
 ]
 
 package_name = f"su.{NAME}"
